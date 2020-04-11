@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -35,7 +35,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required|max:64',
+            'content' => 'required|max:128'
+        ]);
+        $post = new BlogPost();
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->save();
+        $request->session()->flash('status', 'BlogPost created');
+        return redirect()->route('posts.show', ['post'=>$post->id]);
     }
 
     /**

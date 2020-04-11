@@ -1,5 +1,6 @@
 @extends('templates.app')
 @section('content')
+    <a class="btn btn-primary" href="{{ route('posts.create') }}">Create new post</a>
     <ul>
      @forelse($posts as $post)
         <li>

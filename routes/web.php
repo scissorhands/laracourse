@@ -19,4 +19,4 @@ Route::get('/', function () {
 })->name('start');
 
 Route::get('/app', function(){ return view('apphome'); })->name('home');
-Route::resource('/posts', 'PostController')->only(['index', 'show']);
+Route::resource('/posts', 'PostController')->only(['index', 'show', 'create', 'store']);
