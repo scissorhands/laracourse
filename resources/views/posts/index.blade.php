@@ -12,7 +12,14 @@
             @forelse($posts as $post)
             <tr>
                 <td><a href="{{ route('posts.show', ['post'=>$post->id]) }}">{{ $post->title }}</a></td>
-                <td><a href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>|<a href="#">Delete</a></td>
+                <td>
+                    <a href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
+                    <form method="POST"
+                        action="{{ route('posts.destroy', ['post'=>$post->id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn" type="submit">Delete</button>
+                    </form>
             </tr>
             @empty
                 <tr>No posts</tr>
