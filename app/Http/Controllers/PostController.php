@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BlogPost;
+use App\Http\Requests\StoreBlogPost;
 
 class PostController extends Controller
 {
@@ -33,16 +34,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required|max:64',
-            'content' => 'required|max:128'
-        ]);
-        $post = new BlogPost();
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
-        $post->save();
+        $validated = $request->validated();
+        $post = BlogPost::create($validated);
         $request->session()->flash('status', 'BlogPost created');
         return redirect()->route('posts.show', ['post'=>$post->id]);
     }
