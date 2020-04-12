@@ -27,7 +27,11 @@
                 </td>
             </tr>
             @empty
-                <tr>No posts</tr>
+            <tr>
+                <td>No posts</td>
+                <td></td>
+                <td></td>
+            </tr>
             @endforelse
         </tbody>
     </table>
