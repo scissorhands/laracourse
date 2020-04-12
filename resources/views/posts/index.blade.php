@@ -1,11 +1,13 @@
 @extends('templates.app')
 @section('content')
     <a class="btn btn-primary" href="{{ route('posts.create') }}">Create new post</a>
-    <table class="table table-stripped">
+    <br><br>
+    <table class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Actions</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -13,13 +15,16 @@
             <tr>
                 <td><a href="{{ route('posts.show', ['post'=>$post->id]) }}">{{ $post->title }}</a></td>
                 <td>
-                    <a href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
+                </td>
+                <td>
                     <form method="POST"
                         action="{{ route('posts.destroy', ['post'=>$post->id]) }}">
                         @csrf
                         @method('DELETE')
-                        <button class="btn" type="submit">Delete</button>
+                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                     </form>
+                </td>
             </tr>
             @empty
                 <tr>No posts</tr>
