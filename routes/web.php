@@ -13,10 +13,5 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('start');
-
-Route::get('/app', function(){ return view('apphome'); })->name('home');
+Route::get('/', function(){ return view('home'); })->name('home');
 Route::resource('/posts', 'PostController');

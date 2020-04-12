@@ -1,4 +1,4 @@
-@extends('templates.app')
+@extends('templates.layout')
 @section('content')
     <form method="POST" action="{{ route('posts.update', ['post'=>$post->id]) }}">
        @csrf

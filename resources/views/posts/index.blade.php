@@ -1,4 +1,4 @@
-@extends('templates.app')
+@extends('templates.layout')
 @section('content')
     <a class="btn btn-primary" href="{{ route('posts.create') }}">Create new post</a>
     <br><br>
