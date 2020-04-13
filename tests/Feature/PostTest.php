@@ -48,4 +48,19 @@ class PostTest extends TestCase
             ->assertSessionHas('status');
         $this->assertEquals(session('status'), 'Blog Post created');
     }
+
+    public function testStoreFail(){
+        $params = [
+            'title' => '',
+            'content' => ''
+        ];
+
+        $this->post('/posts', $params)
+            ->assertStatus(302)
+            ->assertSessionHas('errors');
+        $messages = session('errors')->getMessages();
+        $this->assertEquals($messages['title'][0], 'The title field is required.');
+        $this->assertEquals($messages['content'][0], 'The content field is required.');
+
+    }
 }
