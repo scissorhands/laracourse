@@ -66,7 +66,11 @@ class PostTest extends TestCase
 
     public function testUpdatePost(){
         $post = $this->createDummyBlogPost();
-        $this->assertDatabaseHas('blog_posts', $post->toArray());
+        $original_post = [
+            'title' => $post->title,
+            'content' => $post->content
+        ];
+        $this->assertDatabaseHas('blog_posts', $original_post);
 
         $updated_params = [
             'title' => 'Test title updated',
@@ -76,18 +80,22 @@ class PostTest extends TestCase
             ->assertStatus(302)
             ->assertSessionHas('status');
         $this->assertEquals(session('status'), 'Blog Post was updated');
-        $this->assertDatabaseMissing('blog_posts', $post->toArray());
+        $this->assertDatabaseMissing('blog_posts', $original_post);
     }
 
     public function testDeletePost(){
         $post = $this->createDummyBlogPost();
-        $this->assertDatabaseHas('blog_posts', $post->toArray());
+        $original_post = [
+            'title' => $post->title,
+            'content' => $post->content
+        ];
+        $this->assertDatabaseHas('blog_posts', $original_post);
 
         $this->delete("/posts/{$post->id}")
             ->assertStatus(302)
             ->assertSessionHas('status');
         $this->assertEquals(session('status'), 'Blog Post was deleted');
-        $this->assertDatabaseMissing('blog_posts', $post->toArray());
+        $this->assertDatabaseMissing('blog_posts', $original_post);
     }
 
     private function createDummyBlogPost(): BlogPost {
