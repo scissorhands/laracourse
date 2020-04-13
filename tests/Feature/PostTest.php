@@ -63,4 +63,24 @@ class PostTest extends TestCase
         $this->assertEquals($messages['content'][0], 'The content field is required.');
 
     }
+
+    public function testUpdatePost(){
+        $params = [
+            'title' => 'Test title',
+            'content' => 'test content'
+        ];
+        $post = BlogPost::create($params);
+
+        $this->assertDatabaseHas('blog_posts', $params);
+
+        $updated_params = [
+            'title' => 'Test title updated',
+            'content' => 'test content updated'
+        ];
+        $this->put("/posts/{$post->id}", $updated_params)
+            ->assertStatus(302)
+            ->assertSessionHas('status');
+        $this->assertEquals(session('status'), 'Blog Post was updated');
+        $this->assertDatabaseMissing('blog_posts', $params);
+    }
 }
