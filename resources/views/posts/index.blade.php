@@ -1,38 +1,27 @@
 @extends('templates.layout')
 @section('content')
-    <a class="btn btn-primary" href="{{ route('posts.create') }}">Create new post</a>
-    <br><br>
-    <table class="table table-striped table-sm">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($posts as $post)
-            <tr>
-                <td><a href="{{ route('posts.show', ['post'=>$post->id]) }}">{{ $post->title }}</a></td>
-                <td>
+    <div class="row col-sm-12">
+        <a class="btn btn-primary" href="{{ route('posts.create') }}">Create new post</a>
+    </div>
+    <div class="row">
+            @forelse ($posts as $post)
+                <div class="col-sm-12" style="padding-top: 28px">
+                    <h3><a href="{{ route('posts.show', ['post'=>$post->id]) }}">{{ $post->title }}</a></h3>
+                    @if($post->comments_count)
+                        <p>{{ $post->comments_count }} comments</p>
+                    @else
+                        <p>No comments</p>
+                    @endif
                     <a class="btn btn-secondary btn-sm" href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
-                </td>
-                <td>
-                    <form method="POST"
+                    <form method="POST" class="form" style="display: inline"
                         action="{{ route('posts.destroy', ['post'=>$post->id]) }}">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                     </form>
-                </td>
-            </tr>
+                </div>
             @empty
-            <tr>
-                <td>No posts</td>
-                <td></td>
-                <td></td>
-            </tr>
+                <p>No posts</p>
             @endforelse
-        </tbody>
-    </table>
+    </div>
 @endsection
