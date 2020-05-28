@@ -11,11 +11,7 @@ use App\Comment;
 class PostTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+    
     public function testSeeNoPosts()
     {
         $response = $this->get('/posts');
@@ -52,7 +48,8 @@ class PostTest extends TestCase
             'content' => 'My content'
         ];
 
-        $this->post('/posts', $params)
+        $this->actingAs($this->user())
+            ->post('/posts', $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
         $this->assertEquals(session('status'), 'Blog Post created');
@@ -64,7 +61,8 @@ class PostTest extends TestCase
             'content' => ''
         ];
 
-        $this->post('/posts', $params)
+         $this->actingAs($this->user())
+            ->post('/posts', $params)
             ->assertStatus(302)
             ->assertSessionHas('errors');
         $messages = session('errors')->getMessages();
@@ -85,7 +83,8 @@ class PostTest extends TestCase
             'title' => 'Test title updated',
             'content' => 'test content updated'
         ];
-        $this->put("/posts/{$post->id}", $updated_params)
+         $this->actingAs($this->user())
+            ->put("/posts/{$post->id}", $updated_params)
             ->assertStatus(302)
             ->assertSessionHas('status');
         $this->assertEquals(session('status'), 'Blog Post was updated');
@@ -100,7 +99,8 @@ class PostTest extends TestCase
         ];
         $this->assertDatabaseHas('blog_posts', $original_post);
 
-        $this->delete("/posts/{$post->id}")
+        $this->actingAs($this->user())
+            ->delete("/posts/{$post->id}")
             ->assertStatus(302)
             ->assertSessionHas('status');
         $this->assertEquals(session('status'), 'Blog Post was deleted');

@@ -12,7 +12,7 @@ class HomeTest extends TestCase
      */
     public function testExample()
     {
-        $response = $this->get('/');
+        $response = $this->get('/home');
         $response->assertSeeText("Welcome home");
         $response->assertSeeText("Get comfy");
     }

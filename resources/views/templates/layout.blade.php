@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <title>Blog App</title>
+    <title>My Bloggitty Blog</title>
 </head>
 <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -19,7 +19,7 @@
             <a class="p-2 text-dark" href="{{ route('login') }}">Login</a>
             <a class="p-2 text-dark" href="{{ route('register') }}">Register</a>
         @else
-            <a class="p-2 text-dark" onclick="event.preventDefault();document.getElementById('form-logout').submit();" href="#">Logout</a>
+            <a class="p-2 text-dark" onclick="event.preventDefault();document.getElementById('form-logout').submit();" href="#">Logout ({{ Auth::user()->name }})</a>
             <form method="POST" id="form-logout" action="{{ route('logout') }}" style="display: none">
                 @csrf
 
