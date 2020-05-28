@@ -8,26 +8,30 @@
     <title>Blog App</title>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ route('home') }}">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link" href="{{ route('posts.index') }}">Blog<span class="sr-only">(current)</span></a>
-                </li>
-              </ul>
-            </div>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">My Bloggitty Blog</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="{{ route('home') }}">Home</a>
+            <a class="p-2 text-dark" href="{{ route('posts.index') }}">Blog Posts</a>
+            <a class="p-2 text-dark" href="{{ route('posts.create') }}">Add</a>
         </nav>
+        @guest
+            <a class="p-2 text-dark" href="{{ route('login') }}">Login</a>
+            <a class="p-2 text-dark" href="{{ route('register') }}">Register</a>
+        @else
+            <a class="p-2 text-dark" onclick="event.preventDefault();document.getElementById('form-logout').submit();" href="#">Logout</a>
+            <form method="POST" id="form-logout" action="{{ route('logout') }}" style="display: none">
+                @csrf
+
+            </form>
+        @endguest
+    </div>
+    <div class="container">
         @if (session()->has('status'))
             <div class="alert alert-success">{{ session()->get('status') }}</div>
         @endif
         @yield('content')
     </div>
-
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
