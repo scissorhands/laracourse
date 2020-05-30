@@ -1,8 +1,5 @@
 @extends('templates.layout')
 @section('content')
-    <div class="row col-sm-12">
-        <a class="btn btn-primary" href="{{ route('posts.create') }}">Create new post</a>
-    </div>
     <div class="row">
             @forelse ($posts as $post)
                 <div class="col-sm-12" style="padding-top: 28px">
