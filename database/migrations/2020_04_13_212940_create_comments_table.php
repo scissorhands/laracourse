@@ -17,8 +17,12 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->text('content');
+            
             $table->unsignedBigInteger('blog_post_id')->index();
-            $table->foreign('blog_post_id')->references('id')->on('blog_posts');
+            $table->foreign('blog_post_id')
+            ->references('id')
+            ->on('blog_posts')
+            ->onDelete('cascade');
         });
     }
 
@@ -29,6 +33,8 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('comments', function(Blueprint $table){
+            $table->dropForeign(['blog_post_id']);
+        });
     }
 }
