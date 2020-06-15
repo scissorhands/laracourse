@@ -72,10 +72,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = BlogPost::findOrFail($id);
-        $this->authorize('update-post', $post);
-        // if(Gate::denies('update-post', $post)){
-        //     abort(403, "You cannot update this post");
-        // }
+        $this->authorize('update', $post);
         return view('posts.edit', ['post'=>$post]);
     }
 
@@ -89,10 +86,7 @@ class PostController extends Controller
     public function update(StoreBlogPost $request, $id)
     {
         $post = BlogPost::findOrFail($id);
-        $this->authorize('update-post', $post);
-        // if(Gate::denies('update-post', $post)){
-        //     abort(403, "You cannot update this post");
-        // }
+        $this->authorize('update', $post);
 
         $validated = $request->validated();
         $post->fill($validated);
@@ -110,7 +104,7 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = BlogPost::findOrFail($id);
-        $this->authorize('delete-post', $post);
+        $this->authorize('delete', $post);
         $post->delete();
         $request->session()->flash('status', 'Blog Post was deleted');
         return redirect()->route('posts.index');
