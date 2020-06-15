@@ -15,13 +15,17 @@
                     @else
                         <p>No comments</p>
                     @endif
-                    <a class="btn btn-secondary btn-sm" href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
-                    <form method="POST" class="form" style="display: inline"
-                        action="{{ route('posts.destroy', ['post'=>$post->id]) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                    </form>
+                    @can('update', $post)
+                        <a class="btn btn-secondary btn-sm" href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
+                    @endcan
+                    @can('delete', $post)
+                        <form method="POST" class="form" style="display: inline"
+                            action="{{ route('posts.destroy', ['post'=>$post->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                        </form>
+                    @endcan
                 </div>
             @empty
                 <p>No posts</p>

@@ -25,10 +25,13 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        // Gate::before(function($user, $ability){
-        //     if($user->is_admin && in_array($ability, ['update-post']) ){
-        //         return true;
-        //     }
-        // });
+        Gate::define('home.secret', function($user){
+            return $user->is_admin;
+        });
+        Gate::before(function($user, $ability){
+            if($user->is_admin && in_array($ability, ['update', 'delete']) ){
+                return true;
+            }
+        });
     }
 }

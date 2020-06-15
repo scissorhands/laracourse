@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function(){ return view('welcome'); })->name('welcome');
+Route::get('/secret', 'HomeController@secret')
+	->name('secret')
+	->middleware('can:home.secret');
 Route::get('/home', function(){ return view('home'); })->name('home');
 Route::resource('/posts', 'PostController');
 Auth::routes();
