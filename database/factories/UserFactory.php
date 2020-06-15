@@ -24,6 +24,7 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
+        'is_admin' => false
     ];
 });
 
@@ -34,5 +35,6 @@ $factory->state(App\User::class, 'john-doe', function (Faker $faker) {
         'email' => "john@laravel.test",
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
+        'is_admin' => true
     ];
 });
