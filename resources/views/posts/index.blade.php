@@ -4,6 +4,12 @@
             @forelse ($posts as $post)
                 <div class="col-sm-12" style="padding-top: 28px">
                     <h3><a href="{{ route('posts.show', ['post'=>$post->id]) }}">{{ $post->title }}</a></h3>
+
+                    <p class="text-muted">
+                        Added {{ $post->created_at->diffForHumans() }}
+                        by {{ $post->user->name }}
+                    </p>
+                    
                     @if($post->comments_count)
                         <p>{{ $post->comments_count }} comments</p>
                     @else
