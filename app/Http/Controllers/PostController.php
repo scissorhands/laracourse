@@ -47,6 +47,7 @@ class PostController extends Controller
     public function store(StoreBlogPost $request)
     {
         $validated = $request->validated();
+        $validated['user_id'] = $request->user()->id;;
         $post = BlogPost::create($validated);
         $request->session()->flash('status', 'Blog Post created');
         return redirect()->route('posts.show', ['post'=>$post->id]);
