@@ -17,6 +17,6 @@ class Comment extends Model
     public static function boot(){
     	parent::boot();
 
-        static::addGlobalScope(new LatestScope);
+        // static::addGlobalScope(new LatestScope);
     }
 }
