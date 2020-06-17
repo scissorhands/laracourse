@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -38,8 +39,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeWithMostBlogPosts(Builder $query)
+    {
+        return $query->withCount('blogPosts')
+        ->orderBy('blog_posts_count', 'desc');
+    }
+
     public function blogPosts()
     {
-        return $this->hasMany(App\BlogPost::class);
+        return $this->hasMany('App\BlogPost');
     }
 }

@@ -1,6 +1,7 @@
 @extends('templates.layout')
 @section('content')
     <div class="row">
+        <div class="col-sm-8">
             @forelse ($posts as $post)
                 <div class="col-sm-12" style="padding-top: 28px">
                     <h3><a href="{{ route('posts.show', ['post'=>$post->id]) }}">{{ $post->title }}</a></h3>
@@ -30,5 +31,42 @@
             @empty
                 <p>No posts</p>
             @endforelse
+        </div>
+        <div class="col-sm-4">
+            <div class="container">
+                <div class="row">
+                    <div class="card" style="width: 18rem">
+                        <div class="card-body">
+                            <h5 class="card-title">Most Commented</h5>
+                            <p class="card-text mb-2 text-muted">What people are talking about</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach($most_commented as $post)
+                                <li class="list-group-item">
+                                    <a href="{{ route('posts.show', $post->id)}}">
+                                        {{ $post->title }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="card" style="width: 18rem">
+                        <div class="card-body">
+                            <h5 class="card-title">Most Active Users</h5>
+                            <p class="card-text mb-2 text-muted">Users with most posts written</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach($most_active_users as $user)
+                                <li class="list-group-item">
+                                    {{ $user->name }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
