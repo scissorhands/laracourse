@@ -22,10 +22,13 @@
                     @else
                         <p>No comments</p>
                     @endif
+                    @auth
                     @can('update', $post)
                         <a class="btn btn-secondary btn-sm" href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
                     @endcan
+                    @endauth
 
+                    @auth
                     @if(!$post->trashed())
                         @can('delete', $post)
                             <form method="POST" class="form" style="display: inline"
@@ -36,6 +39,7 @@
                             </form>
                         @endcan
                     @endif
+                    @endauth
                 </div>
             @empty
                 <p>No posts</p>
