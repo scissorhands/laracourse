@@ -12,9 +12,10 @@
                        </del>
                     @endif
 
-                    <x-updated :date="$post->created_at"
-                        :name="$post->user->name">
-                    </x-updated>
+                    <p class="text-muted">
+                        Added {{ $post->created_at->diffForHumans() }}
+                        by {{ $post->user->name }}
+                    </p>
                     
                     @if($post->comments_count)
                         <p>{{ $post->comments_count }} comments</p>
@@ -42,52 +43,34 @@
         </div>
         <div class="col-sm-4">
             <div class="container">
-                <div class="row">
-                    <div class="card" style="width: 18rem">
-                        <div class="card-body">
-                            <h5 class="card-title">Most Commented</h5>
-                            <p class="card-text mb-2 text-muted">What people are talking about</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
+                <div class="row mt-4">
+                    <x-card 
+                    title="Most Commented" 
+                    subtitle="What people are talking about">
+                        @slot('items')
                             @foreach($most_commented as $post)
-                                <li class="list-group-item">
-                                    <a href="{{ route('posts.show', $post->id)}}">
-                                        {{ $post->title }}
-                                    </a>
-                                </li>
+                            <li class="list-group-item">
+                                <a href="{{ route('posts.show', ['post'=>$post->id]) }}">
+                                    {{ $post->title }}
+                                </a>
+                            </li>
                             @endforeach
-                        </ul>
-                    </div>
+                        @endslot
+                    </x-card>
                 </div>
                 <div class="row mt-4">
-                    <div class="card" style="width: 18rem">
-                        <div class="card-body">
-                            <h5 class="card-title">Most Active Users</h5>
-                            <p class="card-text mb-2 text-muted">Users with most posts written</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @foreach($most_active_users as $user)
-                                <li class="list-group-item">
-                                    {{ $user->name }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    <x-card 
+                    title="Most Active Users" 
+                    subtitle="Users with most posts written" 
+                    :items="collect($most_active_users)->pluck('name')">
+                    </x-card>
                 </div>
                 <div class="row mt-4">
-                    <div class="card" style="width: 18rem">
-                        <div class="card-body">
-                            <h5 class="card-title">Most Active Users Last Month</h5>
-                            <p class="card-text mb-2 text-muted">Users with most posts written last month</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @foreach($most_active_last_month as $user)
-                                <li class="list-group-item">
-                                    {{ $user->name }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    <x-card 
+                    title="Most Active Users Last Month" 
+                    subtitle="Users with most posts written last month" 
+                    :items="collect($most_active_last_month)->pluck('name')">
+                    </x-card>
                 </div>
             </div>
         </div>

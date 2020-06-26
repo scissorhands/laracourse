@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\View\Components\BadgeMessage;
 use App\View\Components\UpdatedComponent;
+use App\View\Components\CardComponent;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::component('badge', BadgeMessage::class);
         Blade::component('updated', UpdatedComponent::class);
+        Blade::component('card', CardComponent::class);
     }
 }
