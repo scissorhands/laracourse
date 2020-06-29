@@ -14,6 +14,10 @@
         New BlogPost!
     </x-badge>
 
+    <p>
+        <strong>Currently read by {{ $counter }} people.</strong>
+    </p>
+
     <h4>Comments</h4>
     @forelse($post->comments as $comment)
     	<p>{{$comment->content}}</p>

@@ -25,13 +25,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $mostCommented = Cache::remember('mostCommented', now()->addMinutes(60), function() {
+        $mostCommented = Cache::remember('most-commented', now()->addMinutes(60), function() {
             return BlogPost::mostCommented()->take(5)->get();
         });
-        $mostActiveUsers = Cache::remember('mostActiveUsers', now()->addMinutes(60), function() {
+        $mostActiveUsers = Cache::remember('most-active-users', now()->addMinutes(60), function() {
             return User::withMostBlogPosts()->take(5)->get();
         });
-        $mostActiveLastMonth = Cache::remember('mostActiveLastMonth', now()->addMinutes(60), function() {
+        $mostActiveLastMonth = Cache::remember('most-active-last-month', now()->addMinutes(60), function() {
             return User::withMostBlogPostsLastMonth()->take(5)->get();
         });
         return view('posts.index', [
@@ -75,7 +75,47 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return view('posts.show', ['post'=>BlogPost::with('comments')->findOrFail($id)]);
+        $blogPost = Cache::remember("blog-post-{$id}", 60, function() use($id){
+            return BlogPost::with('comments')->findOrFail($id);
+        });
+
+        $sessionId = session()->getId();
+        $counterKey = "blog-post-{$id}-counter";
+        $usersKey = "blog-post-{$id}-users";
+
+        $users = Cache::get($usersKey, []);
+        $usersUpdate = [];
+        $difference = 0;
+        $now = now();
+
+        foreach ($users as $session => $lastVisit) {
+            if ($now->diffInMinutes($lastVisit) >= 1) {
+                $difference--;
+            } else {
+                $usersUpdate[$session] = $lastVisit;
+            }
+        }
+
+        if(
+            !array_key_exists($sessionId, $users)
+            || $now->diffInMinutes($users[$sessionId]) >= 1
+        ) {
+            $difference++;
+        }
+
+        $usersUpdate[$sessionId] = $now;
+        Cache::forever($usersKey, $usersUpdate);
+
+        if (!Cache::has($counterKey)) {
+            Cache::forever($counterKey, 1);
+        } else {
+            Cache::increment($counterKey, $difference);
+        }
+        $counter = Cache::get($counterKey);
+        return view('posts.show', [
+            'post'=>$blogPost,
+            'counter' => $counter
+        ]);
     }
 
     /**
