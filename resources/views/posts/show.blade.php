@@ -9,6 +9,7 @@
     <x-updated :date="$post->updated_at">
         Updated
     </x-updated>
+    <x-tags :tags="$post->tags"></x-tags>
 
     <x-badge :show="now()->diffInMinutes($post->created_at) < 50 ?  'true' : ''" >
         New BlogPost!

@@ -12,20 +12,24 @@
                        </del>
                     @endif
 
-                    <p class="text-muted">
-                        Added {{ $post->created_at->diffForHumans() }}
-                        by {{ $post->user->name }}
-                    </p>
-                    
+                    <x-updated
+                        :date="$post->created_at"
+                        :name="$post->user->name">
+                    </x-updated>
+                    <x-tags :tags="$post->tags"></x-tags>
+
                     @if($post->comments_count)
                         <p>{{ $post->comments_count }} comments</p>
                     @else
                         <p>No comments</p>
                     @endif
                     @auth
-                    @can('update', $post)
-                        <a class="btn btn-secondary btn-sm" href="{{ route('posts.edit', ['post'=>$post->id]) }}">Edit</a>
-                    @endcan
+                        @can('update', $post)
+                            <a class="btn btn-secondary btn-sm"
+                                href="{{ route('posts.edit', ['post'=>$post->id]) }}">
+                                Edit
+                            </a>
+                        @endcan
                     @endauth
 
                     @auth
@@ -48,8 +52,8 @@
         <div class="col-sm-4">
             <div class="container">
                 <div class="row mt-4">
-                    <x-card 
-                    title="Most Commented" 
+                    <x-card
+                    title="Most Commented"
                     subtitle="What people are talking about">
                         @slot('items')
                             @foreach($most_commented as $post)
@@ -63,16 +67,16 @@
                     </x-card>
                 </div>
                 <div class="row mt-4">
-                    <x-card 
-                    title="Most Active Users" 
-                    subtitle="Users with most posts written" 
+                    <x-card
+                    title="Most Active Users"
+                    subtitle="Users with most posts written"
                     :items="collect($most_active_users)->pluck('name')">
                     </x-card>
                 </div>
                 <div class="row mt-4">
-                    <x-card 
-                    title="Most Active Users Last Month" 
-                    subtitle="Users with most posts written last month" 
+                    <x-card
+                    title="Most Active Users Last Month"
+                    subtitle="Users with most posts written last month"
                     :items="collect($most_active_last_month)->pluck('name')">
                     </x-card>
                 </div>
