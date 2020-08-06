@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
-// use App\Scopes\LatestScope;
 use App\Scopes\DeletedAdminScope;
 use Illuminate\Support\Facades\Cache;
 
