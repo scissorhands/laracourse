@@ -22,3 +22,6 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 .phpintel
+
+#Mac files
+.DS_Store
