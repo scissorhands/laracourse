@@ -1,12 +1,3 @@
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 <div class="form-group">
     <label class="" for="title">Title</label><br>
     <input class="form-control" type="text" name="title" value="{{ old('title', $post->title ?? null) }}">

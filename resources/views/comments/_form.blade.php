@@ -1,5 +1,6 @@
 <div class="mb-2 mt-2">
 @auth
+<x-errors></x-errors>
 <form method="POST" action="{{ route('posts.store') }}" class="form">
     @csrf
     <div class="form-group">

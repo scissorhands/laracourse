@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use App\View\Components\BadgeMessage;
 use App\View\Components\UpdatedComponent;
 use App\View\Components\CardComponent;
+use App\View\Components\ErrorsComponent;
 use App\View\Components\TagsComponent;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('updated', UpdatedComponent::class);
         Blade::component('card', CardComponent::class);
         Blade::component('tags', TagsComponent::class);
+        Blade::component('errors', ErrorsComponent::class);
 
         view()->composer(['posts.index', 'posts.show'], ActivityComposer::class);
     }
