@@ -15,9 +15,11 @@ class CommentsTableSeeder extends Seeder
     	$posts = App\BlogPost::all();
     	if(!$posts){
     		$this->command->info("There are no BlogPosts to comment on.");
-    	}
-        $comments = factory(App\Comment::class, $howMany)->make()->each(function($comment) use ($posts){
-    		$comment->blog_post_id = $posts->random()->id;
+        }
+        $users = App\User::all();
+        $comments = factory(App\Comment::class, $howMany)->make()->each(function($comment) use ($posts, $users){
+            $comment->blog_post_id = $posts->random()->id;
+            $comment->user_id = $users->random()->id;
     		$comment->save();
     	});
     }

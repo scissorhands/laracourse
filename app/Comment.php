@@ -14,6 +14,11 @@ class Comment extends Model
         return $this->belongsTo('App\BlogPost');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public static function boot(){
     	parent::boot();
 
