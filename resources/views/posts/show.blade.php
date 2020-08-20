@@ -2,15 +2,15 @@
 @section('content')
 <div class="row">
     <div class="col-8">
-        <h3>{{ $post->title }}</h3>
-        <p>{{ $post->content }}</p>
         @if($post->image)
             <div style="background-image: url('{{ $post->image->url() }}'); min-height: 500px; color: white; text-align: center; background-attachment: fixed;">
-                <h1 style="padding-top: 100px; text-shadow: 1px 2px #000"></h1>
+                <h1 style="padding-top: 100px; text-shadow: 1px 2px #000">{{ $post->title }}</h1>
             </div>
         @else
-            <h1></h1>
+            <h1>{{ $post->title }}</h1>
         @endif
+
+        <p>{{ $post->content }}</p>
 
         <x-updated :date="$post->created_at"
             :name="$post->user->name">

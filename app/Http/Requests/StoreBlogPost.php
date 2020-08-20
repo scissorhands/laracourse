@@ -25,7 +25,8 @@ class StoreBlogPost extends FormRequest
     {
         return [
             'title' => 'required|max:64',
-            'content' => 'required|max:128'
+            'content' => 'required|max:128',
+            'thumbnail' => 'image|mimes:jpeg,png,gif,svg,jpg|max:1024|dimensions:min_height=500,min_width=500'
         ];
     }
 }

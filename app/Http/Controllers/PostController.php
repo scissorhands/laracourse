@@ -58,10 +58,8 @@ class PostController extends Controller
         $hasFile = $request->hasFile('thumbnail');
         if($hasFile){
             $file = $request->file('thumbnail');
-            $fileName = "{$post ->id}.{$file->guessExtension()}";
-            $pathName = $request->file('thumbnail')->storeAs('thumbnails', $fileName);
+            $pathName = $request->file('thumbnail')->store('thumbnails');
             $post->image()->save(Image::create(['path'=>$pathName]));
-            // $storedName = Storage::url($pathName);
         }
 
         $request->session()->flash('status', 'Blog Post created');
@@ -147,6 +145,19 @@ class PostController extends Controller
 
         $validated = $request->validated();
         $post->fill($validated);
+
+        $hasFile = $request->hasFile('thumbnail');
+        if($hasFile){
+            $pathName = $request->file('thumbnail')->store('thumbnails');
+            if($post->image){
+                Storage::delete($post->image->path);
+                $post->image->path = $pathName;
+                $post->image->save();
+            } else {
+                $post->image()->save(Image::create(['path'=>$pathName]));
+            }
+        }
+
         $post->save();
         $request->session()->flash('status', 'Blog Post was updated');
         return redirect()->route('posts.show', ['post'=>$post->id]);
