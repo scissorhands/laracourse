@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\BlogPost;
 use App\User;
 use App\Http\Requests\StoreBlogPost;
+use App\Image;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -50,7 +52,18 @@ class PostController extends Controller
     {
         $validated = $request->validated();
         $validated['user_id'] = $request->user()->id;;
+
         $post = BlogPost::create($validated);
+
+        $hasFile = $request->hasFile('thumbnail');
+        if($hasFile){
+            $file = $request->file('thumbnail');
+            $fileName = "{$post ->id}.{$file->guessExtension()}";
+            $pathName = $request->file('thumbnail')->storeAs('thumbnails', $fileName);
+            $post->image()->save(Image::create(['path'=>$pathName]));
+            // $storedName = Storage::url($pathName);
+        }
+
         $request->session()->flash('status', 'Blog Post created');
         return redirect()->route('posts.show', ['post'=>$post->id]);
     }
