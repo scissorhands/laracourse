@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class='col-4'>
-            <img src="" alt="img" class="img-thumbnail avatar">
+            <img src="{{ $user->image ? $user->image->url() : '' }}" alt="img" class="img-thumbnail avatar">
         </div>
         <div class='col-8'>
             <h3>{{ $user->name }}</h3>

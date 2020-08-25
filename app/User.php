@@ -39,9 +39,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-public function comments(){
-    return $this->hasManny('App\Comments');
-}
+    public function comments(){
+        return $this->hasManny('App\Comments');
+    }
+
+    public function image(){
+        return $this->morphOne('App\Image', 'imageable');
+    }
 
     public function scopeWithMostBlogPosts(Builder $query)
     {

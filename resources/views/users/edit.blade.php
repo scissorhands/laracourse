@@ -4,9 +4,10 @@
     method="POST" enctype="multipart/form-data" class="form form-horizontal">
 @csrf
 @method('PUT')
+    <x-errors></x-errors>
     <div class="row">
         <div class='col-4'>
-            <img src="" alt="img" class="img-thumbnail avatar">
+            <img src="{{ $user->image ? $user->image->url() : '' }}" alt="img" class="img-thumbnail avatar">
             <div class="card mt-4">
                 <div class="card-body">
                     <h6>Upload a different photo</h6>
