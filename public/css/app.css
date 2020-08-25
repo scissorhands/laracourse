@@ -10882,7 +10882,16 @@ a.text-dark:focus {
   }
 }
 
+.fm-inline {
+  display: inline;
+}
+
 .lg-badge {
   font-size: 1rem;
+}
+
+.avatar {
+  width: 128px;
+  height: 128px;
 }
 
