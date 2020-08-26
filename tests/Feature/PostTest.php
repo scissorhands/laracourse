@@ -11,7 +11,7 @@ use App\Comment;
 class PostTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function testSeeNoPosts()
     {
         $response = $this->get('/posts');
@@ -21,9 +21,11 @@ class PostTest extends TestCase
 
     public function testSee1BlogPostWhenThereIs1(){
         $title = "Test title";
+        $user = $this->user();
         $post = BlogPost::create([
             'title' => $title,
-            'content' => 'content test'
+            'content' => 'content test',
+            'user_id' => $user->id
         ]);
 
         $response = $this->get('/posts');
@@ -36,8 +38,13 @@ class PostTest extends TestCase
 
     public function testSee1BlogPostWithComments()
     {
+        $user = $this->user();
         $post = $this->createDummyBlogPost();
-        factory(Comment::class, 4)->create(['blog_post_id'=>$post->id]);
+        factory(Comment::class, 4)->create([
+            'commentable_id'=>$post->id,
+            'commentable_type' => 'App\BlogPost',
+            'user_id' => $user->id
+        ]);
         $response = $this->get('/posts');
         $response->assertSeeText("4 comments");
     }
