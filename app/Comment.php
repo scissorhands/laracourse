@@ -14,7 +14,7 @@ class Comment extends Model
 
 
     public function commentable(){
-        return $this->morphTo('App\BlogPost');
+        return $this->morphTo();
     }
 
     public function user()
@@ -25,7 +25,7 @@ class Comment extends Model
     public static function boot(){
     	parent::boot();
         static::creating(function(Comment $comment){
-            if($comment->commentable_type === App\BlogPost::class){
+            if($comment->commentable_type === BlogPost::class){
                 Cache::tags(['blog-post'])->forget("blog-post-{$comment->commentable_id}");
                 Cache::tags(['blog-post'])->forget('mostCommented');
             }

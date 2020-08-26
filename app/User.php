@@ -44,7 +44,7 @@ class User extends Authenticatable
     }
 
     public function commentsOn(){
-        return $this->morphToMany('App\Comment', 'commentable')->latest();
+        return $this->morphMany('App\Comment', 'commentable')->latest();
     }
 
     public function image(){
