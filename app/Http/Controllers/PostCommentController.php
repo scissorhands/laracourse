@@ -6,6 +6,7 @@ use App\BlogPost;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreComment;
 use App\Mail\CommentPosted;
+use App\Mail\CommentPostMarkdown;
 use Illuminate\Support\Facades\Mail;
 
 class PostCommentController extends Controller
@@ -21,7 +22,7 @@ class PostCommentController extends Controller
         ]);
 
         Mail::to($post->user)->send(
-            new CommentPosted($comment)
+            new CommentPostMarkdown($comment)
         );
 
         $request->session()->flash('status', 'Comment was created!');
