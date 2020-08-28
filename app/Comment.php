@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,6 +21,15 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany('App\Tag', 'taggable')->withTimestamps();
+    }
+
+    public function scopeLatest(Builder $query){
+        return $query->orderBy(static::CREATED_AT, 'desc');
     }
 
     public static function boot(){
