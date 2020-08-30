@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CommentPostMarkdown extends Mailable implements ShouldQueue
+class CommentPostMarkdown extends Mailable
 {
     use Queueable, SerializesModels;
     public $comment;
