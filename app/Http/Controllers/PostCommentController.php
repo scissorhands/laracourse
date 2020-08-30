@@ -37,8 +37,10 @@ class PostCommentController extends Controller
         //     new CommentPostMarkdown($comment)
         // );
 
-        ThrottledMail::dispatch(new CommentPostMarkdown($comment), $post->user);
-        NotifyUserPostWasCommented::dispatch($comment);
+        ThrottledMail::dispatch(new CommentPostMarkdown($comment), $post->user)
+        ->onQueue('high');
+        NotifyUserPostWasCommented::dispatch($comment)
+        ->onQueue('low');
         // NotifyUserPostWasCommented::dispatch($comment);
 
         $request->session()->flash('status', 'Comment was created!');

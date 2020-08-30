@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Redis;
 class ThrottledMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $tries = 3;
+    public $timeout = 120;
     public $user;
     public $mail;
     /**
