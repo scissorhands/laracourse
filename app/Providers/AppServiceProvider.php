@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\BlogPost;
+use App\Comment;
 use App\Http\ViewComposers\ActivityComposer;
+use App\Observers\BlogPostObserver;
+use App\Observers\CommentObserver;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\View\Components\BadgeMessage;
@@ -33,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
         Blade::component('badge', BadgeMessage::class);
         Blade::component('updated', UpdatedComponent::class);
         Blade::component('card', CardComponent::class);
@@ -41,5 +46,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('comment-form', CommentForm::class);
 
         view()->composer(['posts.index', 'posts.show'], ActivityComposer::class);
+
+        BlogPost::observe(BlogPostObserver::class);
+        Comment::observe(CommentObserver::class);
     }
 }
