@@ -3,14 +3,10 @@
 
 Hi {{ $user->name }}
 
-Someone has posted on yout blog post
+{{ $comment->user->name }} has commented on a blog post you're watching..
 
 @component('mail::button', ['url' => route('posts.show', ['post' => $comment->commentable->id])])
 View the Blog Post
-@endcomponent
-
-@component('mail::button', ['url' => route('users.show', ['user'=>$comment->user->id])])
-Visit {{ $comment->user->name }} Profile
 @endcomponent
 
 @component('mail::panel')
