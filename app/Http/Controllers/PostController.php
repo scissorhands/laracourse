@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BlogPost;
-use App\User;
+use App\Events\BlogPostPosted;
 use App\Http\Requests\StoreBlogPost;
 use App\Image;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
@@ -61,6 +60,8 @@ class PostController extends Controller
             $pathName = $request->file('thumbnail')->store('thumbnails');
             $post->image()->save(Image::make(['path'=>$pathName]));
         }
+
+        event(new BlogPostPosted($post));
 
         $request->session()->flash('status', 'Blog Post created');
         return redirect()->route('posts.show', ['post'=>$post->id]);
