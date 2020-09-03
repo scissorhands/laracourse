@@ -19,11 +19,8 @@
                     </x-updated>
                     <x-tags :tags="$post->tags"></x-tags>
 
-                    @if($post->comments_count)
-                        <p>{{ $post->comments_count }} comments</p>
-                    @else
-                        <p>No comments</p>
-                    @endif
+                    {{ trans_choice('messages.comments', $post->comments_count) }}
+
                     @auth
                         @can('update', $post)
                             <a class="btn btn-secondary btn-sm"

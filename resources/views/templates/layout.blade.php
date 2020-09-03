@@ -11,15 +11,21 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 mr-md-auto font-weight-normal"><a style="text-decoration: none !important; color: #000;" href="{{ route('welcome') }}">My Bloggitty Blog</a></h5>
         <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="{{ route('home') }}">Home</a>
-            <a class="p-2 text-dark" href="{{ route('posts.index') }}">Blog Posts</a>
-            <a class="p-2 text-dark" href="{{ route('posts.create') }}">Add</a>
+            <a class="p-2 text-dark" href="{{ route('home') }}">{{ __("Home") }}</a>
+            <a class="p-2 text-dark" href="{{ route('posts.index') }}">{{ __('Blog Posts') }}</a>
+            <a class="p-2 text-dark" href="{{ route('posts.create') }}">{{ __('Add') }}</a>
         </nav>
         @guest
-            <a class="p-2 text-dark" href="{{ route('login') }}">Login</a>
-            <a class="p-2 text-dark" href="{{ route('register') }}">Register</a>
+            <a class="p-2 text-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
+            <a class="p-2 text-dark" href="{{ route('register') }}">{{ __('Register') }}</a>
         @else
-            <a class="p-2 text-dark" onclick="event.preventDefault();document.getElementById('form-logout').submit();" href="#">Logout ({{ Auth::user()->name }})</a>
+            <a class="p-2 text-dark" href="{{ route('users.show', ['user'=> Auth::user()->id]) }}">
+                {{ __('Profile') }}
+            </a>
+            <a class="p-2 text-dark" href="{{ route('users.edit', ['user'=> Auth::user()->id]) }}">
+                {{ __('Edit Profile') }}
+            </a>
+            <a class="p-2 text-dark" onclick="event.preventDefault();document.getElementById('form-logout').submit();" href="#">{{ __('Logout') }} ({{ Auth::user()->name }})</a>
             <form method="POST" id="form-logout" action="{{ route('logout') }}" style="display: none">
                 @csrf
 

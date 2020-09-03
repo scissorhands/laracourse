@@ -25,7 +25,7 @@
         </x-badge>
 
         <p>
-            <strong>Currently read by {{ $counter }} people.</strong>
+            <strong>{{ trans_choice('messages.people.reading', ['count'=>$counter]) }}</strong>
         </p>
 
         <h4>Comments</h4>
