@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-
-    public function __construct()
+    private $counter;
+    public function __construct(Counter $counter)
     {
         $this->middleware('auth');
         $this->authorizeResource(User::class, 'user');
+        $this->counter = $counter;
     }
     /**
      * Display a listing of the resource.
@@ -56,10 +57,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $counter = resolve(Counter::class);
         return view('users.show', [
             'user'=>$user,
-            'counter' => $counter->increment("user-{$user->id}")
+            'counter' => $this->counter->increment("user-{$user->id}")
         ]);
     }
 
