@@ -1,10 +1,11 @@
 <?php
 namespace App\Services;
 
+use App\Contracts\CounterContract;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Session\Session;
 
-class Counter{
+class Counter implements CounterContract {
     private $timeout;
     private $cache;
     private $session;
